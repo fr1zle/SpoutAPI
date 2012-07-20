@@ -29,6 +29,8 @@ package org.spout.api.geo.cuboid;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.bulletphysics.collision.shapes.voxel.VoxelPhysicsWorld;
+
 import org.spout.api.entity.component.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.AreaChunkAccess;
@@ -46,7 +48,7 @@ import org.spout.api.util.thread.SnapshotRead;
 /**
  * Represents a cube containing 16x16x16 Chunks (256x256x256 Blocks)
  */
-public abstract class Region extends Cube implements AreaChunkAccess, AreaPhysicsAccess, Iterable<Chunk>  {
+public abstract class Region extends Cube implements AreaChunkAccess, AreaPhysicsAccess, Iterable<Chunk>, VoxelPhysicsWorld {
 
 	/**
 	 * Stores the size of the amount of chunks in this Region
