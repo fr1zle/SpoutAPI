@@ -55,7 +55,9 @@ public class BlockMaterial extends Material implements Placeable {
 	public static final BlockMaterial SKYBOX = new BasicSkyBox();
 	public static final BlockMaterial ERROR = new BlockMaterial("Missing Plugin").setHardness((100.f));
 
+	//Collision
 	private static final BoxShape collision = new BoxShape(new Vector3f(1, 1, 1));
+
 	private ByteFlagContainer occlusion = new ByteFlagContainer(BlockFaces.NESWBT);
 	private float hardness = 0F;
 	private float friction = 0F;
@@ -177,11 +179,6 @@ public class BlockMaterial extends Material implements Placeable {
 	@Override
 	public BlockMaterial getSubMaterial(short data) {
 		return (BlockMaterial) super.getSubMaterial(data);
-	}
-
-	@Override
-	public CollisionShape getCollisionShape() {
-		return collision;
 	}
 
 	/**
@@ -368,21 +365,6 @@ public class BlockMaterial extends Material implements Placeable {
 			block.getRegion().setBlockController(block.getX(), block.getY(), block.getZ(), null);
 		}
 	}
-		
-	/**
-	 * True if this block has collision,
-	 * false if not.
-	 * 
-	 * @return if this block has collision
-	 */
-	public boolean hasCollision() {
-		return this.collision != null;
-	}
-
-	@Override
-	public boolean hasBodyCollision() {
-		return false;
-	}
 
 	/**
 	 * Gets the occluded faces of this Block Material for the data value specified<br>
@@ -460,5 +442,30 @@ public class BlockMaterial extends Material implements Placeable {
 	 */
 	public boolean isCompatibleWith(BlockMaterial m) {
 		return (m.getId() == getId() && ((m.getData() ^ getData()) & getDataMask()) == 0);
+	}
+
+	@Override
+	public boolean isColliding() {
+		return true;
+	}
+
+	@Override
+	public Object getUserData() {
+		return null; //TODO this
+	}
+
+	@Override
+	public CollisionShape getCollisionShape() {
+		return collision;
+	}
+
+	@Override
+	public Vector3f getCollisionOffset() {
+		return null;
+	}
+
+	@Override
+	public boolean isBlocking() {
+		return false;
 	}
 }

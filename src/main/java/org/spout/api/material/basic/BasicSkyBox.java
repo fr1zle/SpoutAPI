@@ -46,7 +46,12 @@ public class BasicSkyBox extends BlockMaterial {
 	}
 
 	@Override
-	public boolean hasCollision() {
+	public boolean isBlocking() {
+		return false;
+	}
+
+	@Override
+	public boolean isColliding() {
 		return false;
 	}
 }

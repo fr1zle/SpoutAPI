@@ -47,7 +47,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.util.thread.LiveWrite;
 import org.spout.api.util.thread.Threadsafe;
 
-public interface Block extends MaterialState, WorldSource, VoxelInfo {
+public interface Block extends MaterialState, WorldSource {
 
 	/**
 	 * Gets the {@link Point} position of this block in the world
@@ -442,10 +442,4 @@ public interface Block extends MaterialState, WorldSource, VoxelInfo {
 	 * @return the old update for that block at that time instant, or null if none
 	 **/
 	public DynamicUpdateEntry dynamicUpdate(long nextUpdate, int data, Object hint);
-
-	public void setColliding(boolean collidable);
-
-	public void setBlocking(boolean blocking);
-
-	public void setCollisionShape(CollisionShape collision);
 }

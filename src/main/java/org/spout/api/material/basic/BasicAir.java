@@ -46,7 +46,12 @@ public final class BasicAir extends BlockMaterial {
 	}
 
 	@Override
-	public boolean hasCollision() {
+	public boolean isBlocking() {
+		return false;
+	}
+
+	@Override
+	public boolean isColliding() {
 		return false;
 	}
 }

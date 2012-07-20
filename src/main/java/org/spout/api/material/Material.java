@@ -32,6 +32,7 @@ package org.spout.api.material;
 import java.util.Arrays;
 
 import com.bulletphysics.collision.shapes.CollisionShape;
+import com.bulletphysics.collision.shapes.voxel.VoxelInfo;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -42,7 +43,7 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.model.Model;
 import org.spout.api.util.LogicUtil;
 
-public abstract class Material extends MaterialRegistry implements MaterialSource {
+public abstract class Material extends MaterialRegistry implements MaterialSource, VoxelInfo {
 	private final short id;
 	private final short data;
 	private final String name;
@@ -429,11 +430,4 @@ public abstract class Material extends MaterialRegistry implements MaterialSourc
 	public String toString() {
 		return "Material {" + getName() + "}";
 	}
-
-	public abstract CollisionShape getCollisionShape();
-
-	public abstract boolean hasCollision();
-
-	public abstract boolean hasBodyCollision();
-
 }
