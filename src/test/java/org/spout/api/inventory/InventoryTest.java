@@ -36,12 +36,9 @@ import org.spout.api.material.Material;
 public class InventoryTest {
 	private int size = 10;
 	private Inventory subject = new Inventory(size);
-	private static Material parentMaterial = new Material((short) 0x0001, "Parent") {
-	};
-	private static Material childMaterial = new Material("Child", (short) 0x0001, parentMaterial) {
-	};
-	private static Material otherMaterial = new Material((short) 0, "Testing2", (short) 0) {
-	};
+	private static Material parentMaterial = new Material((short) 0x0001, "Parent") {};
+	private static Material childMaterial = new Material("Child", (short) 0x0001, parentMaterial) {};
+	private static Material otherMaterial = new Material((short) 0, "Testing2", (short) 0) {};
 
 	private ItemStack testing = new ItemStack(parentMaterial, (short) 2, 1);
 	private ItemStack testingSubMaterial = new ItemStack(childMaterial, (short) 91, 1);

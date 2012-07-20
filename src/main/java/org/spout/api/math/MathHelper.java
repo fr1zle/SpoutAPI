@@ -27,7 +27,6 @@
 package org.spout.api.math;
 
 import javax.vecmath.Quat4f;
-import javax.vecmath.Vector2f;
 import javax.vecmath.Vector3f;
 import javax.vecmath.Vector4f;
 import java.awt.Color;
@@ -718,14 +717,6 @@ public class MathHelper {
 	}
 
 	/* Vector Helpers */
-
-	public static Vector2 toVector2(Vector2f toConvert) {
-		return new Vector2(toConvert.x, toConvert.y);
-	}
-
-	public static Vector2f toVector2f(Vector2 toConvert) {
-		return new Vector2f(toConvert.x, toConvert.y);
-	}
 
 	public static Vector3f toVector3f(Vector3 toConvert) {
 		return new Vector3f(toConvert.x, toConvert.y, toConvert.z);
