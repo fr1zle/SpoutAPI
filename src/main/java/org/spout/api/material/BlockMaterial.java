@@ -31,10 +31,6 @@ import javax.vecmath.Vector3f;
 import com.bulletphysics.collision.shapes.BoxShape;
 import com.bulletphysics.collision.shapes.CollisionShape;
 
-import org.spout.api.collision.BoundingBox;
-import org.spout.api.collision.CollisionModel;
-import org.spout.api.collision.CollisionStrategy;
-import org.spout.api.collision.CollisionVolume;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.controller.BlockController;
 import org.spout.api.entity.component.controller.type.ControllerType;
@@ -42,12 +38,10 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.basic.BasicAir;
 import org.spout.api.material.basic.BasicSkyBox;
-import org.spout.api.material.basic.Unbreakable;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.MathHelper;
-import org.spout.api.math.Vector3;
 import org.spout.api.util.flag.ByteFlagContainer;
 
 /**
