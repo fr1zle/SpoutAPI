@@ -27,6 +27,7 @@
 package org.spout.api.geo.cuboid;
 
 import com.bulletphysics.collision.shapes.CollisionShape;
+import com.bulletphysics.collision.shapes.voxel.VoxelInfo;
 
 import org.spout.api.Source;
 import org.spout.api.entity.component.controller.BlockController;
@@ -46,7 +47,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.util.thread.LiveWrite;
 import org.spout.api.util.thread.Threadsafe;
 
-public interface Block extends MaterialState, WorldSource {
+public interface Block extends MaterialState, WorldSource, VoxelInfo {
 
 	/**
 	 * Gets the {@link Point} position of this block in the world
