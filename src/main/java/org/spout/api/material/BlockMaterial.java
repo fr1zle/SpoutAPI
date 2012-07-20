@@ -26,6 +26,8 @@
  */
 package org.spout.api.material;
 
+import javax.vecmath.Vector3f;
+
 import com.bulletphysics.collision.shapes.BoxShape;
 import com.bulletphysics.collision.shapes.CollisionShape;
 
@@ -59,7 +61,7 @@ public class BlockMaterial extends Material implements Placeable {
 	public static final BlockMaterial SKYBOX = new BasicSkyBox();
 	public static final BlockMaterial ERROR = new BlockMaterial("Missing Plugin").setHardness((100.f));
 
-	private static final BoxShape collision = new BoxShape(MathHelper.toVector3f(new Vector3(1, 1, 1)));
+	private static final BoxShape collision = new BoxShape(new Vector3f(1, 1, 1));
 	private ByteFlagContainer occlusion = new ByteFlagContainer(BlockFaces.NESWBT);
 	private float hardness = 0F;
 	private float friction = 0F;
