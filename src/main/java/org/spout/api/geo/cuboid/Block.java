@@ -26,6 +26,8 @@
  */
 package org.spout.api.geo.cuboid;
 
+import com.bulletphysics.collision.shapes.voxel.VoxelInfo;
+
 import org.spout.api.Source;
 import org.spout.api.entity.component.controller.BlockController;
 import org.spout.api.generator.biome.Biome;
@@ -44,7 +46,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.util.thread.LiveWrite;
 import org.spout.api.util.thread.Threadsafe;
 
-public interface Block extends MaterialState, WorldSource {
+public interface Block extends MaterialState, WorldSource, VoxelInfo {
 
 	/**
 	 * Gets the {@link Point} position of this block in the world
@@ -319,7 +321,7 @@ public interface Block extends MaterialState, WorldSource {
 	 * Sets the sky light level to the given light level<br><br>
 	 * <b>Note: For persistence, alter block material light levels instead</b>
 	 * 
-	 * @param light level to set to
+	 * @param level to set to
 	 * @return this Block
 	 * @throws NullPointerException
 	 */
@@ -329,7 +331,7 @@ public interface Block extends MaterialState, WorldSource {
 	 * Sets the block light level to the given light level<br><br>
 	 * <b>Note: For persistence, alter block material light levels instead</b>
 	 *
-	 * @param light level to set to
+	 * @param level to set to
 	 * @return this Block
 	 * @throws NullPointerException
 	 */

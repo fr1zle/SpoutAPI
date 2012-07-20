@@ -26,6 +26,10 @@
  */
 package org.spout.api.math;
 
+import javax.vecmath.Quat4f;
+import javax.vecmath.Vector2f;
+import javax.vecmath.Vector3f;
+import javax.vecmath.Vector4f;
 import java.awt.Color;
 
 /**
@@ -598,7 +602,15 @@ public class MathHelper {
 		return sum/values.length;
 	}
 
-	/* Quaterion Helpers */
+	/* Quaternion Helpers */
+
+	public static Quat4f toQuaternionf(Quaternion toConvert) {
+		return new Quat4f(toConvert.w, toConvert.x, toConvert.y, toConvert.z);
+	}
+
+	public static Quaternion toQuaternion(Quat4f toConvert) {
+		return new Quaternion(toConvert.w, toConvert.x, toConvert.y, toConvert.z);
+	}
 
 	/**
 	 * Returns the length squared of the given Quaternion
@@ -705,7 +717,31 @@ public class MathHelper {
 		return new Quaternion((float)Math.acos(a.dot(b)), a.cross(b));
 	}
 
-	/* Vector3 Helpers */
+	/* Vector Helpers */
+
+	public static Vector2 toVector2(Vector2f toConvert) {
+		return new Vector2(toConvert.x, toConvert.y);
+	}
+
+	public static Vector2f toVector2f(Vector2 toConvert) {
+		return new Vector2f(toConvert.x, toConvert.y);
+	}
+
+	public static Vector3f toVector3f(Vector3 toConvert) {
+		return new Vector3f(toConvert.x, toConvert.y, toConvert.z);
+	}
+
+	public static Vector3 toVector3(Vector3f toConvert) {
+		return new Vector3(toConvert.x, toConvert.y, toConvert.z);
+	}
+
+	public static Vector4 toVector4(Vector4f toConvert) {
+		return new Vector4(toConvert.x, toConvert.y, toConvert.z, toConvert.w);
+	}
+
+	public static Vector4f toVector4f(Vector4 toConvert) {
+		return new Vector4f(toConvert.x, toConvert.y, toConvert.z, toConvert.w);
+	}
 
 	/**
 	 * Returns the angles, in degrees, about each axis of this quaternion stored
@@ -750,7 +786,6 @@ public class MathHelper {
 		return new Vector3(pitch, yaw, roll);
 	}
 
-	/* Vector3 Helpers */
 	/**
 	 * Returns the length of the given vector.
 	 *
