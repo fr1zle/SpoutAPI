@@ -26,6 +26,9 @@
  */
 package org.spout.api.material;
 
+import com.bulletphysics.collision.shapes.BoxShape;
+import com.bulletphysics.collision.shapes.CollisionShape;
+
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
 import org.spout.api.collision.CollisionStrategy;
@@ -37,10 +40,12 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.basic.BasicAir;
 import org.spout.api.material.basic.BasicSkyBox;
+import org.spout.api.material.basic.Unbreakable;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.MathHelper;
+import org.spout.api.math.Vector3;
 import org.spout.api.util.flag.ByteFlagContainer;
 
 /**
@@ -53,7 +58,14 @@ public class BlockMaterial extends Material implements Placeable {
 	public static final BlockMaterial UNBREAKABLE = new BlockMaterial("Unbreakable").setHardness(100.f);
 	public static final BlockMaterial SKYBOX = new BasicSkyBox();
 	public static final BlockMaterial ERROR = new BlockMaterial("Missing Plugin").setHardness((100.f));
-	
+
+	private static final BoxShape collision = new BoxShape(MathHelper.toVector3f(new Vector3(1, 1, 1)));
+	private ByteFlagContainer occlusion = new ByteFlagContainer(BlockFaces.NESWBT);
+	private float hardness = 0F;
+	private float friction = 0F;
+	private byte opacity = 0xF;
+	private ControllerType controller = null;
+
 	public BlockMaterial(String name) {
 		super(name);
 	}
@@ -104,13 +116,6 @@ public class BlockMaterial extends Material implements Placeable {
 
 		return (BlockMaterial) mat;
 	}
-
-	private ByteFlagContainer occlusion = new ByteFlagContainer(BlockFaces.NESWBT);
-	private float hardness = 0F;
-	private float friction = 0F;
-	private byte opacity = 0xF;
-	private final CollisionModel collision = new CollisionModel(new BoundingBox(0F, 0F, 0F, 1F, 1F, 1F));
-	private ControllerType controller = null;
 
 	/**
 	 * Sets the block controller associated with this material<br>
@@ -177,7 +182,12 @@ public class BlockMaterial extends Material implements Placeable {
 	public BlockMaterial getSubMaterial(short data) {
 		return (BlockMaterial) super.getSubMaterial(data);
 	}
-	
+
+	@Override
+	public CollisionShape getCollisionShape() {
+		return collision;
+	}
+
 	/**
 	 * Gets the friction of this block
 	 * 
@@ -362,24 +372,6 @@ public class BlockMaterial extends Material implements Placeable {
 			block.getRegion().setBlockController(block.getX(), block.getY(), block.getZ(), null);
 		}
 	}
-
-	/**
-	 * Gets the bounding box area of this material
-	 * 
-	 * @return area
-	 */
-	public CollisionVolume getBoundingArea() {
-		return this.collision.getVolume();
-	}
-	
-	/**
-	 * Gets the collision model associated with this block material
-	 * 
-	 * @return the collision model
-	 */
-	public CollisionModel getCollisionModel() {
-		return this.collision;
-	}
 		
 	/**
 	 * True if this block has collision,
@@ -388,17 +380,12 @@ public class BlockMaterial extends Material implements Placeable {
 	 * @return if this block has collision
 	 */
 	public boolean hasCollision() {
-		return this.collision.getStrategy() != CollisionStrategy.NOCOLLIDE;
+		return this.collision != null;
 	}
-	
-	/**
-	 * True if this block is a solid block
-	 * false if not.
-	 * 
-	 * @return if this block has collision
-	 */
-	public boolean isSolid() {
-		return this.collision.getStrategy() == CollisionStrategy.SOLID;
+
+	@Override
+	public boolean hasBodyCollision() {
+		return false;
 	}
 
 	/**
@@ -435,17 +422,6 @@ public class BlockMaterial extends Material implements Placeable {
 	 */
 	public BlockMaterial setOcclusion(short data, BlockFace face) {
 		this.getOcclusion(data).set(face);
-		return this;
-	}
-
-	/**
-	 * Sets the collision strategy to use for this block
-	 * 
-	 * @param strategy
-	 * @return this block material
-	 */
-	public BlockMaterial setCollision(CollisionStrategy strategy) {
-		this.collision.setStrategy(strategy);
 		return this;
 	}
 
