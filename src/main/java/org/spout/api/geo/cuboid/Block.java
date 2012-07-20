@@ -26,6 +26,7 @@
  */
 package org.spout.api.geo.cuboid;
 
+import com.bulletphysics.collision.shapes.CollisionShape;
 import com.bulletphysics.collision.shapes.voxel.VoxelInfo;
 
 import org.spout.api.Source;
@@ -441,4 +442,12 @@ public interface Block extends MaterialState, WorldSource, VoxelInfo {
 	 * @return the old update for that block at that time instant, or null if none
 	 **/
 	public DynamicUpdateEntry dynamicUpdate(long nextUpdate, int data, Object hint);
+
+	public void setColliding(boolean collidable);
+
+	public void setBlocking(boolean blocking);
+
+	public void setCollisionShape(CollisionShape collision);
+
+	public Vector3 getSpoutCollisionOffset();
 }
