@@ -28,6 +28,8 @@ package org.spout.api.entity;
 
 import java.util.UUID;
 
+import com.bulletphysics.dynamics.RigidBody;
+
 import org.spout.api.Source;
 import org.spout.api.collision.CollisionModel;
 import org.spout.api.entity.component.Controller;
@@ -406,4 +408,8 @@ public interface Entity extends Source, WorldSource {
 	 * @param component
 	 */
 	public boolean hasComponent(EntityComponent component);
+
+	public void setBody(RigidBody body);
+
+	public RigidBody getBody();
 }
