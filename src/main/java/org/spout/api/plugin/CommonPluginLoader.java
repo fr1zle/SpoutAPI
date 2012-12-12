@@ -26,6 +26,21 @@
  */
 package org.spout.api.plugin;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.logging.Level;
+import java.util.regex.Pattern;
+
 import org.apache.commons.collections.map.CaseInsensitiveMap;
 import org.spout.api.Engine;
 import org.spout.api.Spout;
@@ -37,20 +52,6 @@ import org.spout.api.exception.InvalidPluginException;
 import org.spout.api.exception.UnknownDependencyException;
 import org.spout.api.exception.UnknownSoftDependencyException;
 import org.spout.api.plugin.security.CommonSecurityManager;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-import java.util.logging.Level;
-import java.util.regex.Pattern;
 
 public class CommonPluginLoader implements PluginLoader {
 	public static final String YAML_SPOUT = "properties.yml";
@@ -149,6 +150,8 @@ public class CommonPluginLoader implements PluginLoader {
 		try {
 			if (engine.getPlatform() == Platform.CLIENT) {
 				loader = new ClientClassLoader(this, this.getClass().getClassLoader());
+				loader.addURL(CommonPluginLoader.class.getProtectionDomain().getCodeSource().getLocation());
+				System.out.println(Arrays.toString(loader.getURLs()));
 			} else {
 				loader = new CommonClassLoader(this, this.getClass().getClassLoader());
 			}
@@ -164,16 +167,19 @@ public class CommonPluginLoader implements PluginLoader {
 
 			result.initialize(this, engine, desc, dataFolder, paramFile, loader);
 
+			System.out.println(result.getClass().getProtectionDomain().toString());
+			System.out.println(result.getClass().getClassLoader().toString() + result.getClass().getClassLoader().getClass());
+
 			if (!locked) {
 				manager.unlock(key);
 			}
 		} catch (Exception e) {
 			throw new InvalidPluginException(e);
 		} catch (UnsupportedClassVersionError e) {
-		    String version = e.getMessage().replaceFirst("Unsupported major.minor version ", "").split(" ")[0];
-		    Spout.getLogger().severe("Plugin " + desc.getName() + " is built for a newer Java version than your current installation, and cannot be loaded!");
-		    Spout.getLogger().severe("To run " + desc.getName() + ", you need Java version " + version + " or higher!");
-		    throw new InvalidPluginException(e);
+			String version = e.getMessage().replaceFirst("Unsupported major.minor version ", "").split(" ")[0];
+			Spout.getLogger().severe("Plugin " + desc.getName() + " is built for a newer Java version than your current installation, and cannot be loaded!");
+			Spout.getLogger().severe("To run " + desc.getName() + ", you need Java version " + version + " or higher!");
+			throw new InvalidPluginException(e);
 		}
 
 		loader.setPlugin(result);

@@ -26,13 +26,23 @@
  */
 package org.spout.api.plugin;
 
+import java.security.CodeSource;
+import java.security.PermissionCollection;
+import java.security.Permissions;
+
 public class ClientClassLoader extends CommonClassLoader {
 	public ClientClassLoader(CommonPluginLoader loader, ClassLoader parent) {
-		super(loader, parent);
+		super(loader, null);
 	}
 
 	@Override
 	protected Class<?> findClass(String name) throws ClassNotFoundException {
 		return findClass(name, true);
+	}
+
+	@Override
+	protected PermissionCollection getPermissions(CodeSource codesource) {
+		System.out.println("Get Permissions Called");
+		return new Permissions();
 	}
 }
